@@ -1,17 +1,18 @@
 import React from "react";
-import { View, Image, TextInput, StyleSheet, Text } from "react-native";
+import { View, Image, StyleSheet, Text } from "react-native";
 
 const ModuleItem = ({ module }) => {
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>{module["Name"]}</Text>
+        <Text style={styles.title}>{module.name}</Text>
+        <Text style={styles.title2}>{module.year}</Text>
       </View>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: module["imageUrl"] }} style={styles.image} />
+        <Image source={{ uri: module.imageUrl }} style={styles.image} />
       </View>
       <View style={styles.descriptionContainer}>
-        <Text style={styles.description}>{module["description"]}</Text>
+        <Text style={styles.description}>{module.description}</Text>
       </View>
     </View>
   );
@@ -29,10 +30,16 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: "center",
     alignItems: "center",
+    flexDirection: "row",
   },
   title: {
     fontSize: 18,
     fontWeight: "bold",
+  },
+  title2: {
+    fontSize: 20,
+    color: "red",
+    marginLeft: 10,
   },
   imageContainer: {
     width: "100%",
@@ -52,6 +59,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   description: {
-    fontSize: 16,
+    fontSize: 14,
+    fontStyle: "italic",
   },
 });
