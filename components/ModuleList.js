@@ -15,16 +15,33 @@ const { width } = Dimensions.get("window");
 const ModuleList = () => {
   const [data, setData] = useState({});
   const [isShown, setShow] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    getAllModules().then((response) => {
-      setData(response);
-      console.log(response[0]["description"].toString());
-    });
+    setLoading(true);
+    setError(null);
+    getAllModules()
+      .then((response) => {
+        setData(response);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
   }, []);
   const toggleIsShown = () => {
     setShow(!isShown);
   };
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (error) {
+    return <Text>An error occurred: {error.message}</Text>;
+  }
 
   return (
     <View style={styles.container}>
@@ -34,6 +51,9 @@ const ModuleList = () => {
           style={styles.buttonContainer}
         >
           {isShown ? <Text>Show</Text> : <Text>Hide</Text>}
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonContainer2}>
+          <Text>Sort years</Text>
         </TouchableOpacity>
       </View>
       {!isShown && (
@@ -59,6 +79,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     color: "white",
     backgroundColor: "paleturquoise",
+    width: width * 0.8,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 20,
+  },
+  buttonContainer2: {
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderColor: "white",
+    borderRadius: 10,
+    color: "white",
+    backgroundColor: "#B0F2B6",
     width: width * 0.8,
     height: 40,
     alignItems: "center",
