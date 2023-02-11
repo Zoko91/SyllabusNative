@@ -11,7 +11,7 @@ import {
 import InputComponent from "./Input";
 import authenticateUser from "../api/authentication";
 
-const AuthForm = () => {
+const AuthForm = ({ verification }) => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,6 +25,7 @@ const AuthForm = () => {
   const authenticate = () => {
     let user = authenticateUser(mail, password);
     if (user) {
+      verification(true);
       Alert.alert(
         "Action sélectionnée",
         `Connexion de ${user.nickName} réussie`,
